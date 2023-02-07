@@ -1,0 +1,8 @@
+openpyxl
+kivy[base]
+kivy_examples
+
+# for buildozer:
+cython  # install in pip
+ 
+
