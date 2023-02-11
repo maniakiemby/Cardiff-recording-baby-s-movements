@@ -2,7 +2,26 @@
     Button:
         text: 'Dodaj ruch dziecka'
         id: add-move
-        pos_hint: {'x': .7, 'top':.7}
+        pos_hint: {'x': .7, 'top': .7}
         size_hint: .15, .3
         on_release:
             root.work_notebook.add_move()
+
+    Button:
+        text: 'Zobacz'
+        id: show
+        pos_hint: {'x': .2, 'top': .7}
+        size_hint: .15, .3
+        on_release:
+            root.work_notebook.print_cardiff_notebook()
+
+<DatePicker>:
+    rows: 3
+    background_normal: ''
+    # background_color: utils.get_color_from_hex('')
+
+<CalendarLayoutWidget>:
+    cols: 7
+    rows: 7
+    padding: 40
+    spacing: 10

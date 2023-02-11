@@ -1,8 +1,10 @@
-openpyxl
-kivy[base]
+openpyxl==3.1.0
+kivy[base]~=2.1.0
 kivy_examples
 
 # for buildozer:
 cython  # install in pip
  
 
+
+python-dateutil~=2.8.2
