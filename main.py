@@ -1,3 +1,6 @@
+import os
+import platform
+import webbrowser
 from datetime import datetime, date, time, timedelta
 import threading
 from dateutil.relativedelta import relativedelta
@@ -23,7 +26,7 @@ kivy.require('2.1.0')
 __version__ = '0.1'
 
 
-class Cardiff(FloatLayout):
+class Cardiff(GridLayout):
     def __init__(self, **kwargs):
         super(Cardiff, self).__init__(**kwargs)
         self.work_notebook = WorkNotebook()
@@ -48,18 +51,30 @@ class WorkNotebook:
         self.__start_date = cell_obj.value
 
     def print_cardiff_notebook(self):
-        date_picker = DatePicker()
-        current_app = App.get_running_app()
-        current_app.popup = ModalView(size_hint=(None, None),
-                              size=(Window.width - 25, Window.height / 1.2),
-                              auto_dismiss=True,
-                              on_dismiss=self.grab_date
-                              )
-        current_app.popup.add_widget(date_picker)
-        current_app.save_data = True
-        current_app.popup.open()
+        # date_picker = DatePicker()
+        # current_app = App.get_running_app()
+        # current_app.popup = ModalView(size_hint=(None, None),
+        #                       size=(Window.width - 25, Window.height / 1.2),
+        #                       auto_dismiss=True,
+        #                       on_dismiss=self.grab_date
+        #                       )
+        # current_app.popup.add_widget(date_picker)
+        # current_app.save_data = True
+        # current_app.popup.open()
 
-    def grab_date(self):
+        if platform.system() in ['Windows', 'Linux']:
+            os.startfile(self.path)
+        if platform.system() == 'Android':
+            webbrowser.open_new(f"ms-excel:ofv|u|{self.path}")
+        else:
+            pass
+            # otwórz powiadomienie, bądzie znajdź jeszcze inne roziwązanie. ( np. wyślij plik emailem)
+
+    # https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html
+    # https://stackoverflow.com/questions/49856502/kivy-listview-excel-file
+    # otwiera excel: https://www.reddit.com/r/kivy/comments/rvq15j/how_to_launch_an_excel_file_in_android_using/
+
+    def grab_date(self, *args):
         current_app = App.get_running_app()
         if current_app.save_data:
             # dodaj funkcjonalność pobierającą datę
@@ -87,7 +102,7 @@ class WorkNotebook:
         # change seconds to minutes and how many half-hour intervals occurred
         return int(delta_time_from_begin.seconds / 60 // 30) + 1
 
-    def get_cell(self):
+    def get_cell(self, *args):
         row = self.which_row()
         column = self.which_column()
         # table position correction
@@ -96,13 +111,16 @@ class WorkNotebook:
 
         return row, column
 
-    def add_move(self):
+    def add_move(self, *args):
         cell = self.get_cell()
         self.last_cell = cell
         row, column = cell
         self.change_value_in_cell(row=row, column=column, value='x')
 
-    def remove_move(self):
+    def add_move_with_another_hour(self, *args):
+        pass
+
+    def remove_move(self, *args):
         if self.last_cell:
             row, column = self.last_cell
             self.change_value_in_cell(row=row, column=column, value='')

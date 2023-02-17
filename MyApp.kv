@@ -1,17 +1,46 @@
 <Cardiff>:
+    rows: 6
+    cols: 1
+    Label:
+        text: 'Czy chcesz dodać ruch teraz ?'
+        pos_hint: {'x': .1, 'top': .8}
+        font_size: sp(12)
+
     Button:
-        text: 'Dodaj ruch dziecka'
-        id: add-move
-        pos_hint: {'x': .7, 'top': .7}
-        size_hint: .15, .3
+        text: 'Dodaj'
+        id: add-move-now
+        pos_hint: {'top': .75}
+        size_hint: .2, .25
         on_release:
             root.work_notebook.add_move()
 
+#    Label:
+#        text: 'Jeśli chcesz dodać ruch w innym zakresie, \n wybierz poniżej odpowiedni'
+#        pos_hint: {'x': .1, 'top': 6}
+#        font_size: sp(12)
+
+#    Button:
+#        text: '20:00 - 20:30'
+#        id: another-hour-of-movement
+#        pos_hint: {'x': .3, 'top': 45}
+#        size_hint: .3, .15
+#        on_release:
+#            # menu rozwijane
+
+#    Button:
+#        text: 'Dodaj'
+#        id: add-move-now
+#        pos_hint: {'x': .4, 'top': .7}
+#        size_hint: .2, .15
+#       on_release:
+#            root.work_notebook.add_move_with_another_hour()
+
     Button:
-        text: 'Zobacz'
+        text: 'Kliknij, aby zobaczyć podgląd'
+        font_size: sp(12)
         id: show
-        pos_hint: {'x': .2, 'top': .7}
-        size_hint: .15, .3
+        pos_hint: {'x': .15, 'top': .3}
+        size_hint: .7, .4
         on_release:
             root.work_notebook.print_cardiff_notebook()
 
