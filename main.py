@@ -1,5 +1,6 @@
 import os
-import platform
+# import platform
+from subprocess import Popen
 import webbrowser
 from datetime import datetime, date, time, timedelta
 import threading
@@ -15,6 +16,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.modalview import ModalView
 from kivy.core.window import Window
+from kivy.utils import platform
 import openpyxl
 
 from myuix import (TitleCurrentDateWidget, ButtonToday, CancelButtonDate, SelectorMonthsWidget, SelectorMonthsLabel,
@@ -62,13 +64,21 @@ class WorkNotebook:
         # current_app.save_data = True
         # current_app.popup.open()
 
-        if platform.system() in ['Windows', 'Linux']:
+        if platform == 'windows':
             os.startfile(self.path)
-        if platform.system() == 'Android':
-            webbrowser.open_new(f"ms-excel:ofv|u|{self.path}")
+
+        if platform == 'linux':
+            # f = os.path.join('temp', self.path)
+            Popen(['localc', self.path])
+
+        if platform == 'android':
+            filepath = os.path.join(os.getcwd(), self.path)
+            print(filepath)
+            webbrowser.open_new(f"ms-excel:ofv|u|{filepath}")
+
         else:
             pass
-            # otwórz powiadomienie, bądzie znajdź jeszcze inne roziwązanie. ( np. wyślij plik emailem)
+            # otwórz powiadomienie, bądź znajdź jeszcze inne roziwązanie. (np. wyślij plik emailem)
 
     # https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html
     # https://stackoverflow.com/questions/49856502/kivy-listview-excel-file
@@ -107,8 +117,8 @@ class WorkNotebook:
         column = self.which_column()
         # table position correction
         row += 3
-        column = column + 2
-
+        column = column + 3
+        print(row, column)
         return row, column
 
     def add_move(self, *args):
